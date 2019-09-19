@@ -28,12 +28,12 @@ def upload(f,folder):
 			destination.write(chunk)
 
 
-def qry(str):
-	import MySQLdb as sql
-	global cur,con
-	con = sql.connect(user='root',password='',database='AppointmentMaster')
-	cur = con.cursor()
-	return cur.execute(str),cur
+# def qry(str):
+# 	import MySQLdb as sql
+# 	global cur,con
+# 	con = sql.connect(user='root',password='',database='AppointmentMaster')
+# 	cur = con.cursor()
+# 	return cur.execute(str),cur
 
 def getusername(req):
 	
@@ -56,26 +56,26 @@ def getusername(req):
 
 	if clientid != None and clientid != '' and clientid != 'None':
 
-		row,c = qry("select name from pages_client where id = {}".format(clientid))
-		
-		if row>0:
-			issp = False
-			isadmin = False
-			return c.fetchone()[0]
-		else:
+		# row,c = qry("select name from pages_client where id = {}".format(clientid))
+		#
+		# if row>0:
+		# 	issp = False
+		# 	isadmin = False
+		# 	return c.fetchone()[0]
+		# else:
 			return None
 
 	elif spid != None and spid != '' and spid != 'None':
 
 		issp = True
 		isadmin = False
-		row,c = qry("select name from pages_sp where id = {}".format(spid))
-		abc = c.fetchone()
-		print(abc)
-		if row>0:
-			return abc[0]
-		else:
-			return None
+		# row,c = qry("select name from pages_sp where id = {}".format(spid))
+		# abc = c.fetchone()
+		# print(abc)
+		# if row>0:
+		# 	return abc[0]
+		# else:
+		return None
 
 	else:
 		
@@ -83,13 +83,13 @@ def getusername(req):
 			issp = False
 			isadmin = True
 			print('\n\n',"select username from pages_admin where id = {}".format(adminid),'\n\n')
-			row,c = qry("select username from pages_admin where id = {}".format(adminid))
-			if row>0:
-				return c.fetchone()[0]
-			else:
-				return None
-		else:
-			return None
+		# 	row,c = qry("select username from pages_admin where id = {}".format(adminid))
+		# 	if row>0:
+		# 		return c.fetchone()[0]
+		# 	else:
+		# 		return None
+		# else:
+		return None
 		
 
 def usercheck_profiling(req,html,userneed=False,data={}):
@@ -100,29 +100,29 @@ def usercheck_profiling(req,html,userneed=False,data={}):
 	services = []
 	cities = []
 
-	rows,cur = qry('select * from serviceType;')
-	if rows:
-		services = cur.fetchall()
-	row,c = qry('select * from city')
-	if rows:
-		cities = c.fetchall()
+	# rows,cur = qry('select * from serviceType;')
+	# if rows:
+	# 	services = cur.fetchall()
+	# row,c = qry('select * from city')
+	# if rows:
+	# 	cities = c.fetchall()
 
-	row,objes=qry('select distinct stype from pages_service')
-	list_of_sers = []
-	if row > 0:
-		obj = objes.fetchall()
-		for x in obj:
-			list_of_sers.append(x[0])
+	# row,objes=qry('select distinct stype from pages_service')
+	# list_of_sers = []
+	# if row > 0:
+	# 	obj = objes.fetchall()
+	# 	for x in obj:
+	# 		list_of_sers.append(x[0])
 
 	if user==None:
 		print(user)
 		if not userneed:
-			data.update({'profile_visibility': 'none','register_visibility':'block','user_name':None,'issp':issp,'isadmin':isadmin,'total_client':client.objects.count(),'obj_ser':service.objects.all(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers,'services':services,'city':cities})
+			data.update({'profile_visibility': 'none','register_visibility':'block','user_name':None,'issp':issp,'isadmin':isadmin,'total_client':client.objects.count(),'obj_ser':service.objects.all(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':"",'services':services,'city':cities})
 			return render(req,html,data)
 		else:
 			return redirect('/homepage')
 	else:
-		data.update({'profile_visibility': 'block','register_visibility':'none','user_name':user,'issp':issp,'isadmin':isadmin,'total_client':client.objects.count(),'obj_ser':service.objects.all(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers,'services':services,'city':cities})
+		data.update({'profile_visibility': 'block','register_visibility':'none','user_name':user,'issp':issp,'isadmin':isadmin,'total_client':client.objects.count(),'obj_ser':service.objects.all(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':"",'services':services,'city':cities})
 		return render(req,html,data)
 
 #		                   *
@@ -131,23 +131,23 @@ def usercheck_profiling(req,html,userneed=False,data={}):
 
 def logout(req):
 
-	row,objes = qry('select distinct stype from pages_service')
+	# row,objes = qry('select distinct stype from pages_service')
 	list_of_sers = []
 
-	if row > 0:
-		obj = objes.fetchall()
-		for x in obj:	
-			list_of_sers.append(x[0])
+	# if row > 0:
+	# 	obj = objes.fetchall()
+	# 	for x in obj:
+	# 		list_of_sers.append(x[0])
 
 	stype = []
 	cities = []
 	
 
-	rows,cur = qry('select * from serviceType;')
-	if rows:
-		services = cur.fetchall()
-	row,c = qry('select * from city')
-	cities = c.fetchall()
+	# rows,cur = qry('select * from serviceType;')
+	# if rows:
+	# 	services = cur.fetchall()
+	# row,c = qry('select * from city')
+	# cities = c.fetchall()
     
 	
 	res = redirect('/')
@@ -182,32 +182,32 @@ def home(request):
 	doccity = set(doccity)
 
 	print('\n\n doccity: ',doccity,'\n\n')
-	return usercheck_profiling(request,'home.html',False,{'city_box':city,'doc_city':doccity,'obj_ser':service.objects.all(),'objects_s':service.objects.all(),'busi_ser_city':bcity})
+	return usercheck_profiling(request,'home.html',False,{'city_box':city,'doc_city':doccity,'obj_ser':service.objects.all(),'objects_s':service.objects.all(),'busi_ser_city':""})
 	
 
 def clientSignup(request):
 	
-	row,objes=qry('select distinct stype from pages_service')
-	list_of_sers = []
-	if row > 0:
-		obj = objes.fetchall()
-		for x in obj:
-			print(x)
-			list_of_sers.append(x[0])
+	# row,objes=qry('select distinct stype from pages_service')
+	# list_of_sers = []
+	# if row > 0:
+	# 	obj = objes.fetchall()
+	# 	for x in obj:
+	# 		print(x)
+	# 		list_of_sers.append(x[0])
 
 
 	username = getusername(request)
 
 	if request.method == 'GET':
-		row,c = qry('select * from city')
-		cities = c.fetchall()
+		# row,c = qry('select * from city')
+		# cities = c.fetchall()
 		#print(cities)
 		
 		if username == None:
-			return render(request,'.\\login\\usersignupform.html',{'obj_ser':service.objects.all(),'profile_visibility': 'none','register_visibility':'block','city':cities,"user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers})
+			return render(request,'.\\login\\usersignupform.html',{'obj_ser':service.objects.all(),'profile_visibility': 'none','register_visibility':'block','city':"","user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':""})
 		else:
 			print('\n\n username: ',username)
-			return render(request,'.\\login\\usersignupform.html',{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none','city':cities,"user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers})
+			return render(request,'.\\login\\usersignupform.html',{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none','city':"","user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':""})
 	else:			
 		c1 = client(id=(client.objects.count()+1),name=request.POST['name'],city=request.POST['location'],email=request.POST['email_id'],phone_no=request.POST['mobile'],password=request.POST['password'],gender=request.POST['gender'])
 		#print("\n\n insert: ",c1.save(),"\n\n")
@@ -219,20 +219,20 @@ def clientSignup(request):
 
 def signin(request):
 
-	row,objes=qry('select distinct stype from pages_service')
-	list_of_sers = []
-	if row > 0:
-		obj = objes.fetchall()
-		for x in obj:	
-			list_of_sers.append(x[0])
+	# row,objes=qry('select distinct stype from pages_service')
+	# list_of_sers = []
+	# if row > 0:
+	# 	obj = objes.fetchall()
+	# 	for x in obj:
+	# 		list_of_sers.append(x[0])
 
 	login_error = None
 	username = getusername(request)
 	if request.method == 'GET':
 		if username == None:
-			return usercheck_profiling(request,r'login\userlogin.html',False,{'profile_visibility': 'none','obj_ser':service.objects.all(),'register_visibility':'block',"user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers})
+			return usercheck_profiling(request,r'login\userlogin.html',False,{'profile_visibility': 'none','obj_ser':service.objects.all(),'register_visibility':'block',"user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':""})
 		else:
-			x = usercheck_profiling(request,r'.\login\userlogin.html',True,{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none',"user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':list_of_sers})
+			x = usercheck_profiling(request,r'.\login\userlogin.html',True,{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none',"user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count(),'service_types':""})
 			
 			print('\n\n username: ',username)
 			return x
@@ -266,15 +266,15 @@ def SPSignup(request):
 
 	if request.method == 'GET':
 		
-		row,c = qry('select * from city')
-		cities = c.fetchall()
+		# row,c = qry('select * from city')
+		# cities = c.fetchall()
 		#print(cities)
 		
 		if username == None:
-			return usercheck_profiling(request,'.\\login\\serviceprovidersignupform.html',False,{'profile_visibility': 'none','obj_ser':service.objects.all(),'register_visibility':'block','city':cities,"user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count()})
+			return usercheck_profiling(request,'.\\login\\serviceprovidersignupform.html',False,{'profile_visibility': 'none','obj_ser':service.objects.all(),'register_visibility':'block','city':"","user_name":None,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count()})
 		else:
 			print('\n\n username: ',username)
-			return usercheck_profiling(request,'.\\login\\serviceprovidersignupform.html',True,{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none','city':cities,"user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count()})
+			return usercheck_profiling(request,'.\\login\\serviceprovidersignupform.html',True,{'profile_visibility': 'block','obj_ser':service.objects.all(),'register_visibility':'none','city':"","user_name":username,'total_client':client.objects.count(),'total_sp':sp.objects.count(),'total_appointment':appointment.objects.count(),'total_service':service.objects.count()})
 	else:			
 		
 		sp1 = sp(id=(sp.objects.count()+1),name=request.POST['name'],city=request.POST['location'],email=request.POST['email_id'],phone_no=request.POST['phone_no'],password=request.POST['password'])
@@ -426,14 +426,14 @@ def newservice(request):
 		dd = request.POST
 		print(spid)
 		stype = dd['stype']
-		if dd['stype'] == 'Other':
-			rows,c = qry("select * from servicetype")
-			del c
-			row,cur = qry('insert into servicetype (id,name) values({},{})'.format(rows+1,dd['other_stype']))
-			del cur
-			if row > 0:
-				print('service type : ',dd['other_stype'],' inserted successfully ')
-			stype = dd['other_stype']
+		# if dd['stype'] == 'Other':
+		# 	rows,c = qry("select * from servicetype")
+		# 	del c
+		# 	row,cur = qry('insert into servicetype (id,name) values({},{})'.format(rows+1,dd['other_stype']))
+		# 	del cur
+		# 	if row > 0:
+		# 		print('service type : ',dd['other_stype'],' inserted successfully ')
+		# 	stype = dd['other_stype']
 		
 		f1 = request.FILES['profile']
 		upload(f1,'sp')
@@ -486,14 +486,14 @@ def editservice(request):
 		
 		stype = dd['stype']
 		
-		if dd['stype'] == 'Other':
-			rows,c = qry("select * from servicetype")
-			del c
-			row,cur = qry('insert into servicetype (id,name) values({},{})'.format(rows+1,dd['other_stype']))
-			del cur
-			if row > 0:
-				print('service type : ',dd['other_stype'],' inserted successfully ')
-			stype = dd['other_stype']
+		# if dd['stype'] == 'Other':
+		# 	rows,c = qry("select * from servicetype")
+		# 	del c
+		# 	row,cur = qry('insert into servicetype (id,name) values({},{})'.format(rows+1,dd['other_stype']))
+		# 	del cur
+		# 	if row > 0:
+		# 		print('service type : ',dd['other_stype'],' inserted successfully ')
+		# 	stype = dd['other_stype']
 
 		print('\n\n\n---- ',serid)
 		newobj = service(id=serid,providerid=sp.objects.get(id=spid),title=dd['title'],time_start_h=dd['time_s_h'],time_start_m=dd['time_s_m'],time_end_h=dd['time_e_h'],time_end_m=dd['time_e_m'],city=dd['location'],location=dd['address'],day=dd['days'],description=dd['detail'],image='',stype=dd['stype'],phone_no=dd['phone_no'],cost=dd['cost'],status="Pending")
