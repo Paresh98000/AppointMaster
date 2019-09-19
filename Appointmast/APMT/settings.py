@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'APMT.wsgi.application'
 DATABASES = {
     'default': {
 #       'ENGINE': 'django.db.backends.mysql',
-        'ENGINE': 'django.db.backends.sqlit3',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 	#'NAME':'AppointmentMaster',
 	#'USER':'root',
