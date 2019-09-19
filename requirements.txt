@@ -1,2 +1,3 @@
-Django
+Django==2.2.5
 pycryptodome
+pillow
