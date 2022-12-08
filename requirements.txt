@@ -3,7 +3,7 @@ anaconda==0.0.1.1
 backports.shutil-get-terminal-size==1.0.0
 basemap==1.2.0
 buffer==0.0.3
-certifi==2019.9.11
+certifi==2022.12.7
 chardet==3.0.4
 cipher==0.1
 cms==0.0.2
